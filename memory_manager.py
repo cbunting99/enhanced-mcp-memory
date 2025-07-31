@@ -81,14 +81,14 @@ class MemoryManager:
             current_dir = current_dir.parent
             
         # Check for common project files in current directory
-        project_files = ['package.json', 'pyproject.toml', 'Cargo.toml', 'go.mod', 'README.md']
+        project_files = ('package.json', 'pyproject.toml', 'Cargo.toml', 'go.mod', 'README.md')
         for file in project_files:
             if os.path.exists(os.path.join(cwd, file)):
                 return Path(cwd).name
                 
         # If we're in a subdirectory that looks like a project, use parent directory name
         # This helps when running from subdirectories of a project
-        parent_indicators = ['src', 'lib', 'tests', 'docs', 'scripts']
+        parent_indicators = ('src', 'lib', 'tests', 'docs', 'scripts')
         if Path(cwd).name.lower() in parent_indicators:
             return Path(cwd).parent.name
             
@@ -102,7 +102,7 @@ class MemoryManager:
         description_parts = []
         
         # Check for README files
-        readme_files = ['README.md', 'README.txt', 'README.rst']
+        readme_files = ('README.md', 'README.txt', 'README.rst')
         for readme in readme_files:
             readme_path = os.path.join(project_path, readme)
             if os.path.exists(readme_path):
@@ -306,11 +306,11 @@ class MemoryManager:
         content_lower = content.lower()
         
         # Enhanced keyword patterns for better classification
-        error_keywords = ['error', 'exception', 'failed', 'bug', 'crash', 'traceback', 'stderr', 'warning', 'issue']
-        code_keywords = ['function', 'class', 'method', 'import', 'def ', 'async ', 'await', 'return', 'variable', 'algorithm']
-        decision_keywords = ['decided', 'choose', 'approach', 'strategy', 'solution', 'implement', 'architecture', 'design']
-        pattern_keywords = ['pattern', 'template', 'structure', 'framework', 'convention', 'standard', 'best practice']
-        task_keywords = ['todo', 'task', 'need to', 'should', 'must', 'implement', 'fix', 'add', 'create', 'update']
+        error_keywords = ('error', 'exception', 'failed', 'bug', 'crash', 'traceback', 'stderr', 'warning', 'issue')
+        code_keywords = ('function', 'class', 'method', 'import', 'def ', 'async ', 'await', 'return', 'variable', 'algorithm')
+        decision_keywords = ('decided', 'choose', 'approach', 'strategy', 'solution', 'implement', 'architecture', 'design')
+        pattern_keywords = ('pattern', 'template', 'structure', 'framework', 'convention', 'standard', 'best practice')
+        task_keywords = ('todo', 'task', 'need to', 'should', 'must', 'implement', 'fix', 'add', 'create', 'update')
         
         # Determine memory type with priority order
         if any(keyword in content_lower for keyword in error_keywords):

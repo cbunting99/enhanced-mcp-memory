@@ -295,6 +295,31 @@ def get_tasks(status: str = None, limit: int = 20) -> str:
 
 @mcp.tool()
 @track_performance
+def update_task_status(task_id: str, status: str) -> str:
+    """Update task status (pending, in_progress, completed, cancelled)"""
+    try:
+        if not memory_manager.current_project_id:
+            return "No active project. Cannot update task."
+            
+        # Validate status
+        valid_statuses = ['pending', 'in_progress', 'completed', 'cancelled']
+        if status not in valid_statuses:
+            return f"⚠️ Invalid status. Must be one of: {', '.join(valid_statuses)}"
+            
+        success = db_manager.update_task_status(task_id, status)
+        
+        if success:
+            logger.info(f"Updated task {task_id[:8]}... to status: {status}")
+            return f"✅ Task status updated to '{status}'"
+        else:
+            return f"⚠️ Task not found or update failed"
+            
+    except Exception as e:
+        logger.error(f"Error updating task status: {e}")
+        return f"⚠️ Error updating task: {str(e)}"
+
+@mcp.tool()
+@track_performance
 def get_project_summary() -> str:
     """Get summary of the current project"""
     try:

@@ -148,6 +148,7 @@ models/
 *.model
 *.bin
 *.safetensors
+CLAUDE.md
 
 # Embedding cache
 embeddings/

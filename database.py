@@ -709,7 +709,7 @@ class DatabaseManager:
             stats = {}
             
             # Table counts
-            tables = ['projects', 'memories', 'tasks', 'knowledge_relationships', 'sessions', 'notifications']
+            tables = ('projects', 'memories', 'tasks', 'knowledge_relationships', 'sessions', 'notifications')
             for table in tables:
                 cursor.execute(f"SELECT COUNT(*) as count FROM {table}")
                 stats[f"{table}_count"] = cursor.fetchone()['count']
